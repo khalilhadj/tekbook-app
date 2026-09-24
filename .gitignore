@@ -34,3 +34,4 @@ build/
 .env
 compose-final.txt
 scan.txt
+*.bak
