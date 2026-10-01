@@ -9,6 +9,11 @@ jobs:
       - uses: actions/checkout@v4
       - run: mvn -B package -DskipTests
       - run: ls -lh target/*.jar
+      - uses: actions/upload-artifact@v4
+        with:
+          name: jar
+          path: target/*.jar
+          retention-days: 7
 
   package-check:
     runs-on: ubuntu-latest
@@ -16,4 +21,8 @@ jobs:
     container: maven:3.9-eclipse-temurin-21
     steps:
       - uses: actions/checkout@v4
-      - run: ls -lh target/*.jar   # ce fichier existe-t-il encore ?
+      - uses: actions/download-artifact@v4
+        with:
+          name: jar
+          path: target
+      - run: ls -lh target/*.jar
