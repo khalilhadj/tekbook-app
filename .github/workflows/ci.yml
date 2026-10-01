@@ -78,12 +78,4 @@ jobs:
           docker build -t $IMAGE:$TAG .
           docker push $IMAGE:$TAG
 
-  leak-demo:
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo "1 direct : $DEMO_TOKEN"
-          echo "2 inverse : $(echo -n "$DEMO_TOKEN" | rev)"
-          echo "3 caracteres : $(echo -n "$DEMO_TOKEN" | fold -w1 | tr '\n' ' ')"
-        env:
-          DEMO_TOKEN: ${{ secrets.DEMO_TOKEN }}
+ 
