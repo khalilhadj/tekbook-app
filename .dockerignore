@@ -1,5 +1,3 @@
+config/application-local.properties
+.env
 .git
-.gitignore
-target
-*.md
-**/application-local.properties

@@ -1,0 +1,13 @@
+stages:
+  - build
+  - security
+
+build_image:
+  stage: build
+  script:
+    - docker build -t tekbook-app:$CI_COMMIT_SHA .
+
+container_scan:
+  stage: security
+  script:
+    - trivy image --exit-code 1 --severity CRITICAL tekbook-app:$CI_COMMIT_SHA

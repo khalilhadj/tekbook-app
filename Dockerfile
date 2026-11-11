@@ -1,16 +1,10 @@
-FROM maven:3.9-eclipse-temurin-21 AS builder
+FROM maven:3.9-eclipse-temurin-21 AS build
 WORKDIR /build
-COPY pom.xml .
-RUN mvn dependency:go-offline -B
-COPY src ./src
-RUN mvn package -DskipTests -B
+COPY . .
+RUN mvn -q -DskipTests package
 
-FROM eclipse-temurin:21-jre-alpine
-WORKDIR /app
-COPY --from=builder /build/target/*.jar app.jar
-RUN addgroup -S app && adduser -S -G app app
-USER app
+FROM gcr.io/distroless/java21-debian12
+COPY --from=build /build/target/*.jar /app.jar
+USER 10001
 EXPOSE 8080
-HEALTHCHECK --interval=30s --timeout=3s \
-  CMD wget -qO- http://localhost:8080/actuator/health || exit 1
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "/app.jar"]
