@@ -75,8 +75,8 @@ jobs:
         run: |
           IMAGE=ghcr.io/${GITHUB_REPOSITORY,,}
           TAG=${GITHUB_SHA::8}
-          docker build -t $IMAGE:$TAG .
-          docker push $IMAGE:$TAG
+          docker build -t "$IMAGE:$TAG" .
+          docker push "$IMAGE:$TAG"
 
  
 
