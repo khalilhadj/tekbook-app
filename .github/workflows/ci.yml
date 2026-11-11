@@ -12,7 +12,7 @@ jobs:
       - name: Version Semgrep
         run: docker run --rm semgrep/semgrep:latest semgrep --version
       - name: Scan Semgrep
-        run: docker run --rm -v "$PWD:/src" -w /src semgrep/semgrep:latest semgrep scan --config tekbook-rules.yml --metrics=off --json --output semgrep-report.json .
+        run: docker run --rm -v "$PWD:/src" -w /src semgrep/semgrep:latest semgrep scan --config tekbook-rules.yml --error --metrics=off --json --output semgrep-report.json .
       - name: Rapport
         if: always()
         uses: actions/upload-artifact@v4
